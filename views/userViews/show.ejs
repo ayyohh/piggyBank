@@ -37,13 +37,25 @@
 
         <h1>coins</h1>
 
-        <% coin.forEach((coin) => { %>
-      <div class="row-5">
+        <% coins.forEach((payment) => { %>
 
-        <a href="/piggybank/portfolio/addcoin"> <%=coin.name%> </a>
+          <p> $<%=payment.amount%></p>
+
+    <% }) %>
+
+
+
+
+    <div class="row coinTopTen">
+    <% for (let key in ) { %>
+
+        <div class="col-6 coinData">
+        <p>Symbol: <%= key %> </p>
+        <p>Price: <%= coinData[key].USD %> </p>
       </div>
 
-  <% }) %>
+  <% } %>
+</div>
 
 
         <%= JSON.stringify(coin) %>

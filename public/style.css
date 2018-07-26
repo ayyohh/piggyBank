@@ -1,3 +1,42 @@
+.container-fluid {
+  background-color: rgb(53, 58, 63);
+  padding-bottom: 300px;
+  color: white;
+}
+
+
+
 .loginForm {
-  margin-top: 15px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+
+.coinData {
+  display: inline;
+  height: 130px;
+  background-color: rgba(255, 32, 148, 0.5);
+  color: white;
+  font-size: 16px;
+  margin: 20px;
+  padding-top: 10px;
+  border-style: solid white 10px;
+}
+
+.symbol {
+  text-align: left;
+  font-weight: bold;
+  width: 45px;
+  height: 30px;
+  background-color: rgba(53, 58, 63, 0.5);
+}
+.price {
+  text-align: center;
+  font-size: 33px;
+  margin-top: 5px;
+}
+.percent {
+  text-align: left;
+  margin-top: 7px;
+
 }

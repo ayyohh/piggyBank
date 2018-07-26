@@ -13,12 +13,12 @@
 
 
   <body>
-    <div class="container">
+    <div class="container-fluid">
 
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
-          <img src="/piggybankIconNoBG.png" width="75" height="75" class="d-inline-block align-top" alt="">
-          <img src="/logo2.png" width="120" height="75" class="d-inline-block align-top" alt="">
+          <img src="/piggybankIconNoBG.png" width="95" height="95" class="d-inline-block align-top" alt="">
+          <img src="/logo2.png" width="150" height="95" class="d-inline-block align-top" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -52,9 +52,31 @@
 
 
 
-      <h1>Top Ten Coins</h1>
+      <h3>Top Ten Coins</h3>
 
-      <%= JSON.stringify(coins) %>
+<div class="row">
+
+
+    <% for (let key in coinData["RAW"]){ %>
+        <% let fuck1 = key; %>
+        <% let fuck2 = coinData["RAW"][key]["USD"]["PRICE"]; %>
+        <% let fuck3 = coinData["RAW"][key]["USD"]["CHANGEPCT24HOUR"]; %>
+        <div class="col-2 coinData">
+
+
+        <div class="symbol"><%= fuck1 %></div>
+        <div class="price"> $<%= parseFloat(fuck2).toFixed(2) %> </div>
+        <div class="percent"> [<%= parseFloat(fuck3).toFixed(2) %>%] </div>
+
+      </div>
+    <% } %>
+
+</div>
+
+
+
+
+
 
 
 

@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/users');
 const CoinMarketData = require('../models/coinmarketcapData');
+const request = require('request');
+
+
 
 //==============================================
 //      passport set up
@@ -37,8 +40,8 @@ const isLoggedIn = (req, res, next) => {
 
 
 /////                     CMC API TESTING                //
-var CoinMarketCap = require("node-coinmarketcap");
-var cmc = new CoinMarketCap();
+// var CoinMarketCap = require("node-coinmarketcap");
+// var cmc = new CoinMarketCap();
 // If you want to check a single coin, use get() (You need to supply the coinmarketcap id of the cryptocurrency, not the symbol)
 // If you want to use symbols instead of id, use multi.
 // cmc.get("bitcoin", coin => {
@@ -101,22 +104,30 @@ router.post('/register', (req, res) => {
   });
 });
 
-//Login Routes
+
+
+let parsedData = []
+let parsedData2 = []
+let nameOfCoin;
+let infoOnCoin;
+let fuck1;
+let fuck2;
+//===========================Login Routes
+
 router.get('/login', (req, res) => {
+  // request('https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,DASH&tsyms=BTC,USD,EUR', (error, response, body) => {
+  request('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,LTC,XRP,XLM,USDT,ETH,IOTA,EOS,BCH,ADA&tsyms=USD', (error, response, body) => {
+    if(!error && response.statusCode == 200){
+      let coinData = JSON.parse(body);
 
-  cmc.multi(coins => {
-    coins.getTop();
-
-    res.render('../views/userViews/login.ejs', {
-      coins: coins
-
+      res.render('../views/userViews/login.ejs', {
+        coinData: coinData
+      });
+    }
   });
-
-
-  });
-
-
 });
+
+
 
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/piggybank/portfolio',
@@ -142,9 +153,30 @@ router.get('/portfolio', isLoggedIn, (req, res) => {
   })
 });
 
-router.get('/portfolio/addcoin', isLoggedIn, (req, res) => {
-  res.render('../views/transactionViews/new.ejs', {
 
+//===========================================================
+//                add coins with search bar
+
+router.get('/portfolio/addcoin', isLoggedIn, (req, res) => {
+
+  const updateResult = query => {
+	let resultList = document.querySelector(".result");
+	resultList.innerHTML = "";
+
+	CoinMarketData.map(algo =>{
+		query.split(" ").map(word =>{
+			if(algo.toLowerCase().indexOf(word.toLowerCase()) != -1){
+				resultList.innerHTML += `<li class="list-group-item">${algo}</li>`;
+			}
+		})
+	})
+}
+
+updateResult("")
+
+
+  res.render('../views/transactionViews/new.ejs', {
+    updateResult: updateResult
   })
 })
 
