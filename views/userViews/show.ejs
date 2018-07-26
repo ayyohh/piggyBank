@@ -23,10 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/piggybank/login">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/piggybank/register">Register</a>
+              <a class="nav-link" href="/piggybank/logout">Logout</a>
             </li>
           </ul>
         </div>
@@ -34,17 +31,18 @@
 
 
 
-      <a href="/piggybank/portfolio/addcoin">Add a Coin</a>
+      <a href="/piggybank/<%= user.id %>/portfolio/addcoin">Add a Coin</a>
       </br>
-      <% holdings.forEach((holding) => { %>
-        <div class="row-5">
-          <h4> <%=holding.symbol%> </h4>
-          <h5> <%=holding.numOfHoldings%> </h5>
-          <a href="/piggybank/portfolio/<%= holding.id %>">See more...</a>
 
-        </div>
+          <% holdings.forEach((holding) => { %>
+            <div class="row-5">
 
-      <% }) %>
+              <a href="/piggybank/portfolio/<%= holding.id %>"><%=holding.symbol %></a>
+
+            </div>
+
+          <% }) %>
+
 
 
 
@@ -57,6 +55,6 @@
     </div>
 
 
-    <a href="/piggybank/logout">Logout</a>
+    <a href="/piggybank/<%= user.id %>/logout">Logout</a>
   </body>
 </html>

@@ -42,7 +42,7 @@
 
 
         <div class="addTransactionForm">
-          <form action="/piggybank/portfolio" method="post">
+          <form action="/piggybank/<%=user.id%>/portfolio" method="post">
             <div class="form-group">
               <input type="text" name="symbol" class="form-control" placeholder="Enter Symbol You Want To Track">
             </div>
