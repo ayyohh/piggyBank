@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/users');
+const Holding = require('../models/holdings');
 const CoinMarketData = require('../models/coinmarketcapData');
 const request = require('request');
 
@@ -148,9 +149,17 @@ router.get('/logout', (req, res) => {
 
 
 router.get('/portfolio', isLoggedIn, (req, res) => {
-  res.render('../views/userViews/show.ejs', {
-    coin: CoinMarketData
-  })
+
+  Holding.find({}, (err, foundHoldings) => {
+    if(err){
+      console.log('error in find');
+      console.log(err);
+    } else {
+        res.render('../views/userViews/show.ejs', {
+          holdings: foundHoldings
+      })
+    }
+  });
 });
 
 
@@ -158,27 +167,46 @@ router.get('/portfolio', isLoggedIn, (req, res) => {
 //                add coins with search bar
 
 router.get('/portfolio/addcoin', isLoggedIn, (req, res) => {
+  res.render('../views/transactionViews/new.ejs');
+});
 
-  const updateResult = query => {
-	let resultList = document.querySelector(".result");
-	resultList.innerHTML = "";
+//Create route
+router.post('/portfolio', (req, res) => {
+  Holding.create(req.body, (err, newHolding) => {
+    if(err){
+      console.log(err, 'error in create');
+      res.render('../views/transactionViews/new.ejs');
+    } else {
+      res.redirect('/piggybank/portfolio');
+    }
+  });
+});
 
-	CoinMarketData.map(algo =>{
-		query.split(" ").map(word =>{
-			if(algo.toLowerCase().indexOf(word.toLowerCase()) != -1){
-				resultList.innerHTML += `<li class="list-group-item">${algo}</li>`;
-			}
-		})
-	})
-}
+//Show route
+router.get('/portfolio/:id', (req, res) => {
+  Holding.findById(req.params.id, (err, holding) => {
+    if(err){
+      console.log(err, 'error in show');
+      res.send(err);
+    } else {
+      let sym = holding.symbol;
+      console.log(holding.symbol);
+      request('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=' + sym + '&tsyms=USD', (error, response, body) => {
 
-updateResult("")
-
-
-  res.render('../views/transactionViews/new.ejs', {
-    updateResult: updateResult
-  })
-})
+        if(!error && response.statusCode == 200){
+          let coinData = JSON.parse(body);
+          console.log(coinData);
+          console.log(coinData["RAW"][sym]["USD"]);
+          res.render('../views/transactionViews/show.ejs', {
+            holding: holding,
+            coinData: coinData,
+            sym: sym,
+          });
+        }
+      });
+    }
+  });
+});
 
 
 

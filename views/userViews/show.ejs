@@ -33,33 +33,22 @@
       </nav>
 
 
-        <h1>user show page</h1>
 
-        <h1>coins</h1>
+      <a href="/piggybank/portfolio/addcoin">Add a Coin</a>
+      </br>
+      <% holdings.forEach((holding) => { %>
+        <div class="row-5">
+          <h4> <%=holding.symbol%> </h4>
+          <h5> <%=holding.numOfHoldings%> </h5>
+          <a href="/piggybank/portfolio/<%= holding.id %>">See more...</a>
 
-        <% coins.forEach((payment) => { %>
+        </div>
 
-          <p> $<%=payment.amount%></p>
-
-    <% }) %>
-
-
-
-
-    <div class="row coinTopTen">
-    <% for (let key in ) { %>
-
-        <div class="col-6 coinData">
-        <p>Symbol: <%= key %> </p>
-        <p>Price: <%= coinData[key].USD %> </p>
-      </div>
-
-  <% } %>
-</div>
+      <% }) %>
 
 
-        <%= JSON.stringify(coin) %>
-        <%= coin.percent_change_24h %>%
+
+
 
 
 

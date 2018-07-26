@@ -37,7 +37,20 @@
 
 
 
+        <div class="row-5">
+          <h4> Symbol: <%=holding.symbol%> </h4>
+          <h5> Amount of Coins: <%=holding.numOfHoldings%> </h5>
+          <h5> Cost: <%=holding.cost%> </h5>
+          <h5> Date: <%=holding.date%> </h5>
 
+
+        </div>
+
+        <h2>LIVE coin status</h2>
+
+        <h6>Current Price: <%= coinData["RAW"][sym]["USD"]["PRICE"] %> </h6>
+        <h6>Change 24HR: <%= parseFloat(coinData["RAW"][sym]["USD"]["CHANGE24HOUR"]).toFixed(2) %> </h6>
+        <h6>Total Volume 24HR: <%= parseFloat(coinData["RAW"][sym]["USD"]["TOTALVOLUME24H"]).toFixed(2) %> </h6>
 
 
 
