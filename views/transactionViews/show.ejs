@@ -27,40 +27,54 @@
         </div>
       </nav>
 
+        <div class="sym">
+          <h1> <%=sym%> </h1>
+          </div>
 
-        <h1>show transaction page</h1>
-
-
-
-        <div class="row-5">
-          <h4> Symbol: <%=sym%> </h4>
-          <h5> Amount of Coins: <%=hold%> </h5>
-          <h5> Cost at Purchase: <%=cost%> </h5>
-
-
-
-        </div>
-
-        <h2>LIVE coin status</h2>
-
-        <h6>Current Price: <%= coinData["RAW"][sym]["USD"]["PRICE"] %> </h6>
-        <h6>Change 24HR: <%= parseFloat(coinData["RAW"][sym]["USD"]["CHANGE24HOUR"]).toFixed(2) %> </h6>
-        <h6>Total Volume 24HR: <%= parseFloat(coinData["RAW"][sym]["USD"]["TOTALVOLUME24H"]).toFixed(2) %> </h6>
-
+        <h4>LIVE coin status</h4>
+<div class="row">
+        <div class="col currentPrice">
+        <h2 class="h2class"> $<%= coinData["RAW"][sym]["USD"]["PRICE"] %> </h2>
+        <label for="price">Current Price</label>
+      </div>
+      <div class="col change24">
+        <h2 class="h2class"> $<%= parseFloat(coinData["RAW"][sym]["USD"]["CHANGE24HOUR"]).toFixed(2) %> </h2>
+        <label for="change24">Change (24HR)</label>
+      </div>
+      <div class="col totalVol">
+        <h2 class="h2class"> <%= parseFloat(coinData["RAW"][sym]["USD"]["TOTALVOLUME24H"]).toFixed(2) %> </h2>
+        <label for="totalVol">Total Volume (24HR)</label>
+      </div>
+</div>
+<div class="row userCoinInfo">
+  <div class="col hold">
+    <h3 class="h3class"> <%=hold%> </h3>
+    <label for="hold"># Coins Holding</label>
+  </div>
+  <div class="col costAtPurchase">
+    <h3 class="h3class"> <%=cost%> </h3>
+    <label for="costAtPurchase">Cost at Purchase</label>
+  </div>
+</div>
+<div class="row investmentInfo">
+<div class="col initial">
         <% let initialInvestment = hold * cost %>
-        <h5> Initial Investment: <%=initialInvestment%> </h5>
-
+        <h3 class="h3class"> $<%=initialInvestment%> </h3>
+        <label for="initial">Initial Investment</label>
+      </div>
+      <div class="col cValue">
         <% let currentValue = coinData["RAW"][sym]["USD"]["PRICE"] * hold %>
-        <h5> Current Value: <%=currentValue%> </h5>
-
+        <h3 class="h3class"> $<%=currentValue%> </h3>
+        <label for="cValue">Current Value</label>
+</div>
+<div class="col tGainLoss">
         <% let gainLoss = currentValue - initialInvestment %>
-        <h5> Total Gain/Loss: <%=gainLoss%> </h5>
+        <h3 class="h3class"> $<%=gainLoss%> </h3>
+        <label for="tGainLoss">Total Gain/Loss</label>
+      </div>
+</div>
 
-
-        <form action="/piggybank/<%=userID%>/portfolio/<%=id%>?_method=DELETE" method="POST">
-          <input type="submit">
-        </form>
-
+    
 
 
 

@@ -12,7 +12,7 @@
     <div class="container-fluid">
 
       <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/piggybank/<%=user.id%>/portfolio">
           <img src="/piggybankIconNoBG.png" width="95" height="95" class="d-inline-block align-top" alt="">
           <img src="/logo2.png" width="150" height="95" class="d-inline-block align-top" alt="">
         </a>
@@ -29,11 +29,12 @@
 <h2 class="portfolioTitle">Welcome to <%= user.username %>'s Coin Portfolio</h2>
 
       <a class="anchor" href="/piggybank/<%= user.id %>/portfolio/addcoin">Add a Coin</a>
+      
       </br>
-        <div class="row">
+        <div class="row holdingRow">
           <% holdings.forEach((holding) => { %>
 
-              <div class="col-2 coinsHeldOnUserShow">
+              <div class="col coinsHeldOnUserShow">
 
 
                 <a href="/piggybank/<%= user.id %>/portfolio/<%= holding.id %>"><%=holding.symbol %></a>
@@ -55,6 +56,6 @@
     </div>
 
 
-    
+
   </body>
 </html>
