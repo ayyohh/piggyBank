@@ -233,19 +233,50 @@ router.get('/:id/portfolio/:holdingID', isLoggedIn, (req, res) => {
 //             edit and delete transaction
 
 router.delete('/:id/portfolio/:holdingID', (req, res) => {
-  User.findById(req.params.id, (id) => {
-    console.log(id);
-    id.portfolio.findByIdAndRemove(req.params.holdingID, (err) => {
-      if (err){
-        console.log('you fucked');
-      } else {
-        console.log('delete request made');
-        res.redirect(`/piggybank/${req.params.id}/portfolio`)
-      }
-    })
-  })
+    User.find({'_id':req.params.id}, (err, id) => {
+        if(err){
+          console.log(err, 'error in show');
+          console.log(id);
+        } else {
 
-})
+          console.log(id[0].portfolio[0]["_id"], 'THIS IS THE ID FOR transaction');
+
+          console.log('delete request made');
+
+          let transactionID = id[0].portfolio[0]["_id"];
+          id.Remove(transactionID);
+          id.save();
+          res.redirect(`/piggybank/${req.params.id}/portfolio`)
+
+        }
+      });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//       } else {
+//         console.log('delete request made');
+//         res.redirect(`/piggybank/${req.params.id}/portfolio`)
+//       }
+//     })
+//   })
+//
+// })
 
 
 
