@@ -103,16 +103,6 @@ router.get('/:id', (req, res) => {
   })
 });
 
-
-let parsedData = []
-let parsedData2 = []
-let nameOfCoin;
-let infoOnCoin;
-let fuck1;
-let fuck2;
-
-
-
 router.get('/:id/portfolio', isLoggedIn, (req, res) => {
     User.findById(req.params.id, (err, user) => {
       if(err){
@@ -224,25 +214,16 @@ router.get('/:id/portfolio/:holdingID', isLoggedIn, (req, res) => {
                           hold: hold,
                           cost: cost,
                           sym: sym,
-                          id: holding_id,
+                          holdingid: holding_id,
                         })
                       }
                     });
                   }
                 });
-        }
-      }
-      // let sym = user.portfolio[0].symbol;
-      // let hold = user.portfolio[0].numOfHoldings;
-      // let cost = user.portfolio[0].cost;
-      // console.log(userID);
-      // console.log(sym, 'this is symbol');
-      // console.log(id);
-      // // console.log(req.params.id);
-      // // console.log(user);
-
-          }
-        });
+                }
+                }
+              }
+            });
       });
 
 
@@ -250,29 +231,26 @@ router.get('/:id/portfolio/:holdingID', isLoggedIn, (req, res) => {
 //             edit and delete transaction
 
 router.delete('/:id/portfolio/:holdingID', (req, res) => {
-    User.find({'_id':req.params.id}, (err, id) => {
+    User.findByIdAndRemove({"_id": req.params.holdingID}, (err) => {
         if(err){
           console.log(err, 'error in show');
-          console.log(id);
         } else {
-          console.log(id);
-          let portfolioArray = id[0]["portfolio"];
-          console.log(portfolioArray, 'this portfolioArray');
-          console.log(id[0].portfolio[0]["_id"], 'THIS IS THE ID FOR transaction');
-          let userID = id[0].portfolio;
-          console.log(userID, 'user id');
-          console.log('delete request made');
-
-          let transactionID = id[0].portfolio[0]["_id"];
-
-          portfolioArray.splice(0, 1);
+          console.log(req.params.holdingID, 'it worked maybe');
           res.redirect(`/piggybank/${req.params.id}/portfolio`);
-
-
-          }
-
+          // let portfolioArray = id[0]["portfolio"];
+          // console.log(portfolioArray, 'this portfolioArray');
+          // console.log(id[0].portfolio[0]["_id"], 'THIS IS THE ID FOR transaction');
+          // let userID = id[0].portfolio;
+          // console.log(userID, 'user id');
+          // console.log('delete request made');
+          //
+          // let transactionID = id[0].portfolio[0]["_id"];
+          //
+          // portfolioArray.splice(0, 1);
+          // res.redirect(`/piggybank/${req.params.id}/portfolio`);
+        }
       });
-  });
+    });
 
 
 
