@@ -185,42 +185,56 @@ router.post('/:id/portfolio', isLoggedIn, (req, res) => {
 });
 
 //Show route
-router.get('/:id/portfolio/:idd', isLoggedIn, (req, res) => {
+router.get('/:id/portfolio/:holdingID', isLoggedIn, (req, res) => {
   User.findById(req.params.id, (err, user) => {
     if(err){
-      console.log(err, 'error in show');
-      res.send(err);
+      console.log(err, 'error');
     } else {
-        user.portfolio.findById(req.params.idd, (err, holding) => {
-          if(err){
-            console.log(err, 'error in show');
-            res.send(err);
-          } else {
-            let sym = holding.symbol;
-            console.log(holding.symbol);
-            request('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=' + sym + '&tsyms=USD', (error, response, body) => {
+      console.log(user, 'user');
+      console.log(user.portfolio[0]);
 
-              if(!error && response.statusCode == 200){
-                let coinData = JSON.parse(body);
-                res.render('../views/transactionViews/show.ejs', {
-                  holding: holding,
-                  coinData: coinData,
-                  sym: sym,
-                  userId: userID,
-                })
+      let userID = user["_id"];
+      let id = user.portfolio[0]["_id"];
+      let sym = user.portfolio[0].symbol;
+      let hold = user.portfolio[0].numOfHoldings;
+      let cost = user.portfolio[0].cost;
+      console.log(userID);
+      console.log(sym, 'this is symbol');
+      console.log(id);
+      // console.log(req.params.id);
+      // console.log(user);
+      User.findById(req.params.holdingID, (err, holding) => {
+              if(err){
+                console.log(err, 'error in show');
+              } else {
+                console.log(holding, 'holding');
+                request('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=' + sym + '&tsyms=USD', (error, response, body) => {
+
+                  if(!error && response.statusCode == 200){
+                    let coinData = JSON.parse(body);
+                    res.render('../views/transactionViews/show.ejs', {
+                      userID: userID,
+                      coinData: coinData,
+                      hold: hold,
+                      cost: cost,
+                      sym: sym,
+                      id: id,
+                    })
+                  }
+                });
               }
             });
           }
         });
-      }
-    });
-  });
+      });
+
 
 //==========================================================
 //             edit and delete transaction
 
 router.delete('/:id/portfolio/:holdingID', (req, res) => {
   User.findById(req.params.id, (id) => {
+    console.log(id);
     id.portfolio.findByIdAndRemove(req.params.holdingID, (err) => {
       if (err){
         console.log('you fucked');

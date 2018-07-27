@@ -38,10 +38,10 @@
 
 
         <div class="row-5">
-          <h4> Symbol: <%=holding.symbol%> </h4>
-          <h5> Amount of Coins: <%=holding.numOfHoldings%> </h5>
-          <h5> Cost at Purchase: <%=holding.cost%> </h5>
-          <h5> Date added: <%=holding.date%> </h5>
+          <h4> Symbol: <%=sym%> </h4>
+          <h5> Amount of Coins: <%=hold%> </h5>
+          <h5> Cost at Purchase: <%=cost%> </h5>
+
 
 
         </div>
@@ -52,17 +52,17 @@
         <h6>Change 24HR: <%= parseFloat(coinData["RAW"][sym]["USD"]["CHANGE24HOUR"]).toFixed(2) %> </h6>
         <h6>Total Volume 24HR: <%= parseFloat(coinData["RAW"][sym]["USD"]["TOTALVOLUME24H"]).toFixed(2) %> </h6>
 
-        <% let initialInvestment = holding.numOfHoldings * holding.cost %>
+        <% let initialInvestment = hold * cost %>
         <h5> Initial Investment: <%=initialInvestment%> </h5>
 
-        <% let currentValue = coinData["RAW"][sym]["USD"]["PRICE"] * holding.numOfHoldings %>
+        <% let currentValue = coinData["RAW"][sym]["USD"]["PRICE"] * hold %>
         <h5> Current Value: <%=currentValue%> </h5>
 
         <% let gainLoss = currentValue - initialInvestment %>
         <h5> Total Gain/Loss: <%=gainLoss%> </h5>
 
 
-        <form action="/piggybank/<%=userId%>/portfolio/?_method=DELETE" method="POST">
+        <form action="/<%=userID%>/portfolio/<%=id%>?_method=DELETE" method="POST">
           <input type="submit">
         </form>
 

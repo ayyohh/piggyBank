@@ -37,7 +37,7 @@
           <% holdings.forEach((holding) => { %>
             <div class="row-5">
 
-              <a href="/piggybank/portfolio/<%= holding.id %>"><%=holding.symbol %></a>
+              <a href="/piggybank/<%= user.id %>/portfolio/<%= holding.id %>"><%=holding.symbol %></a>
 
             </div>
 
