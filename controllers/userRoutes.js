@@ -173,6 +173,7 @@ router.post('/:id/portfolio', isLoggedIn, (req, res) => {
           console.log(err, 'error in create');
           res.render('../views/transactionViews/new.ejs');
         } else {
+          console.log(newHolding);
           user.portfolio.push(newHolding);
           user.save();
           res.redirect(`/piggybank/${user.id}/portfolio`);
@@ -191,39 +192,54 @@ router.get('/:id/portfolio/:holdingID', isLoggedIn, (req, res) => {
       console.log(err, 'error');
     } else {
       console.log(user, 'user');
-      console.log(user.portfolio[0]);
+      console.log(user.portfolio);
 
       let userID = user["_id"];
-      let id = user.portfolio[0]["_id"];
-      let sym = user.portfolio[0].symbol;
-      let hold = user.portfolio[0].numOfHoldings;
-      let cost = user.portfolio[0].cost;
-      console.log(userID);
-      console.log(sym, 'this is symbol');
-      console.log(id);
-      // console.log(req.params.id);
-      // console.log(user);
-      User.findById(req.params.holdingID, (err, holding) => {
-              if(err){
-                console.log(err, 'error in show');
-              } else {
-                console.log(holding, 'holding');
-                request('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=' + sym + '&tsyms=USD', (error, response, body) => {
+      let id = user.portfolio;
 
-                  if(!error && response.statusCode == 200){
-                    let coinData = JSON.parse(body);
-                    res.render('../views/transactionViews/show.ejs', {
-                      userID: userID,
-                      coinData: coinData,
-                      hold: hold,
-                      cost: cost,
-                      sym: sym,
-                      id: id,
-                    })
+      for (let i = 0; i < id.length; i++){
+        console.log(id[i], 'this id i');
+        console.log(req.params.holdingID, 'holding id');
+        let holding_id = id[i]["_id"];
+        let hold = id[i]["numOfHoldings"];
+        let cost = id[i]["cost"];
+        let sym = id[i]["symbol"];
+        console.log(sym);
+
+        if (holding_id == req.params.holdingID) {
+          console.log('ypuj;');
+          User.find({"_id": req.params.holdingID}, (err, holding) => {
+                  if(err){
+                    console.log(err, 'error in show');
+                  } else {
+                    console.log(holding, 'holding');
+                    request('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=' + sym + '&tsyms=USD', (error, response, body) => {
+
+                      if(!error && response.statusCode == 200){
+                        let coinData = JSON.parse(body);
+                        res.render('../views/transactionViews/show.ejs', {
+                          userID: userID,
+                          coinData: coinData,
+                          hold: hold,
+                          cost: cost,
+                          sym: sym,
+                          id: holding_id,
+                        })
+                      }
+                    });
                   }
                 });
-              }
-            });
+        }
+      }
+      // let sym = user.portfolio[0].symbol;
+      // let hold = user.portfolio[0].numOfHoldings;
+      // let cost = user.portfolio[0].cost;
+      // console.log(userID);
+      // console.log(sym, 'this is symbol');
+      // console.log(id);
+      // // console.log(req.params.id);
+      // // console.log(user);
+
           }
         });
       });
@@ -238,17 +254,22 @@ router.delete('/:id/portfolio/:holdingID', (req, res) => {
           console.log(err, 'error in show');
           console.log(id);
         } else {
-
+          console.log(id);
+          let portfolioArray = id[0]["portfolio"];
+          console.log(portfolioArray, 'this portfolioArray');
           console.log(id[0].portfolio[0]["_id"], 'THIS IS THE ID FOR transaction');
-
+          let userID = id[0].portfolio;
+          console.log(userID, 'user id');
           console.log('delete request made');
 
           let transactionID = id[0].portfolio[0]["_id"];
-          id.Remove(transactionID);
-          id.save();
-          res.redirect(`/piggybank/${req.params.id}/portfolio`)
 
-        }
+          portfolioArray.splice(0, 1);
+          res.redirect(`/piggybank/${req.params.id}/portfolio`);
+
+
+          }
+
       });
   });
 
