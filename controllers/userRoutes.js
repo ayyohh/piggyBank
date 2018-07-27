@@ -74,7 +74,7 @@ router.post('/', (req, res) => {
   let newUser = new User({username: req.body.username});
   User.register(newUser, req.body.password, (err, user) => {
     if(err){
-      console.log(err, 'err in create new user');
+      alert('that username already exists');
       return res.render('../views/userViews/new.ejs')
     } else {
       passport.authenticate('local')(req, res, (err) => {

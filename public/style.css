@@ -104,3 +104,11 @@
 .investmentInfo {
   margin-top: 50px;
 }
+
+.deleteBTN {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgba(94, 202, 157, 0.85);
+  color: white;
+  font-weight: bold;
+}
