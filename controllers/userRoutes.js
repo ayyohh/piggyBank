@@ -119,6 +119,7 @@ router.get('/:id/portfolio', isLoggedIn, (req, res) => {
         console.log(err, 'error in show');
         res.send(err);
       } else {
+        console.log(user, 'usersssssss');
           User.find({ '_id': user.id }, 'portfolio', (err, foundHoldings) => {
             if(err){
               console.log('error in find');

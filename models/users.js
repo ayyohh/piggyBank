@@ -3,6 +3,7 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const Holding = require('./holdings.js');
 
 const UserSchema = new mongoose.Schema({
+  fame: String,
   username: String,
   password: String,
   portfolio: [Holding.schema],
