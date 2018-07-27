@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://" + process.env.MONGOLAB_URI + "/piggy_bank")
+const mongodb = Process.env.MONGODB_URI || 'localhost';
+mongoose.connect("mongodb://" + mongodb + "/piggy_bank")
 mongoose.connection.on("connected", () => {
 	console.log("connected to data BASS");
 });
