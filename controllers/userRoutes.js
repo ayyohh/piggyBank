@@ -198,7 +198,6 @@ router.get('/:id/portfolio/:holdingID', isLoggedIn, (req, res) => {
         console.log(sym);
 
         if (holding_id == req.params.holdingID) {
-          console.log('ypuj;');
           User.find({"_id": req.params.holdingID}, (err, holding) => {
                   if(err){
                     console.log(err, 'error in show');
@@ -215,15 +214,15 @@ router.get('/:id/portfolio/:holdingID', isLoggedIn, (req, res) => {
                           cost: cost,
                           sym: sym,
                           holdingid: holding_id,
-                        })
+                        });
                       }
                     });
                   }
                 });
-                }
-                }
               }
-            });
+            }
+          }
+        });
       });
 
 
