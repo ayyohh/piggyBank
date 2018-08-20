@@ -19,10 +19,12 @@ const userRoutes = require('./controllers/userRoutes');
 
 
 app.get('/', (req, res) => {
-  res.redirect('/piggybank')
+  res.redirect('/piggybank/')
 });
 
-app.use('/piggybank', userRoutes);
+app.use('/piggybank/', userRoutes);
+
+
 
 
 

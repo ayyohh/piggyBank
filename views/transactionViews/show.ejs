@@ -52,7 +52,7 @@
     <label class="labelz" for="hold"># Coins Holding</label>
   </div>
   <div class="col costAtPurchase">
-    <h3 class="h3class"> <%=cost%> </h3>
+    <h3 class="h3class"> $<%=cost%> </h3>
     <label class="labelz" for="costAtPurchase">Cost at Purchase</label>
   </div>
 </div>
@@ -75,7 +75,7 @@
 </div>
 
 <form action="/piggybank/<%= userID %>/portfolio/<%= holdingid %>?_method=DELETE" method="POST">
-  <input type="submit" value="Delete" class="deleteBTN">
+  <input type="submit" value="Go Back" class="deleteBTN">
 </form>
 
 

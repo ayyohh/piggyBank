@@ -29,12 +29,12 @@
 <h2 class="portfolioTitle">Welcome to <%= user.username %>'s Coin Portfolio</h2>
 
       <a class="anchor" href="/piggybank/<%= user.id %>/portfolio/addcoin">Add a Coin</a>
-      
+
       </br>
         <div class="row holdingRow">
           <% holdings.forEach((holding) => { %>
 
-              <div class="col coinsHeldOnUserShow">
+              <div class="col-1 coinsHeldOnUserShow">
 
 
                 <a href="/piggybank/<%= user.id %>/portfolio/<%= holding.id %>"><%=holding.symbol %></a>
