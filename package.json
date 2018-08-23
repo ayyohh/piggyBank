@@ -14,9 +14,9 @@
   "author": "ao/np",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/natepappenhagen/piggy-bank/issues"
+    "url": "https://github.com/ayyohh/piggyBank/issues"
   },
-  "homepage": "https://github.com/natepappenhagen/piggy-bank#readme",
+  "homepage": "https://github.com/ayyohh/piggyBank#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
