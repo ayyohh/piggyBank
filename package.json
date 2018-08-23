@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/ayyohh/piggyBank/issues"
   },
-  "homepage": "https://github.com/ayyohh/piggyBank#readme",
+  "homepage": "https://github.com/ayyohh/piggyBankhe#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",

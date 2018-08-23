@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const Port = process.env.Port || 3000;
+const port = process.env.Port || 3000;
 
 
 require('./db/db');
@@ -29,6 +29,6 @@ app.use('/piggybank/', userRoutes);
 
 
 
-app.listen(Port, () => {
-    console.log('i am watching....')
+app.listen(port, () => {
+    console.log('i am watching.... on' + port)
 });
